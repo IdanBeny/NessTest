@@ -1,0 +1,121 @@
+import java.util.Date;
+import java.util.Scanner;
+import java.util.List;
+import java.util.ArrayList;
+
+class Message{
+    private String desc, status, exceDate;
+
+    public Message(String desc,String status,String exceDate){
+        this.desc = desc;
+        this.status = status;
+        this.exceDate = exceDate;
+    }
+    
+    public void changeDesc(String desc){
+        if(!desc.equals(""))  this.desc = desc;
+    }
+     public void changeStatus(String status){
+        if(!status.equals("")) this.status = status;
+    }
+     public void changeExceDate(String exceDate){
+        if(!exceDate.equals("")) this.exceDate = exceDate;
+    }
+    
+    public boolean equals(Message m){
+        return m.desc.equals(this.desc) && 
+               m.status.equals(this.status) &&
+               m.exceDate.equals(this.exceDate);
+    }
+    
+    public String toString(){
+        return this.desc + " // " + this.status + " // " + this.exceDate;
+    }
+}
+
+class ToDoList{
+    private List<Message> todoList;
+    
+    public ToDoList() {
+        this.todoList = new ArrayList<Message>();
+    }
+    public void addMessage(Message m){
+        todoList.add(m);
+    }
+    
+    public void removeMessage(int i){
+        todoList.remove(i);
+    }
+    
+    public Message getMessage(int i){
+        return todoList.get(i);
+    }
+    public void showMessages(){
+        for(int i=0;i<todoList.size();i++)
+            System.out.println((i+1)+". "+todoList.get(i));
+        System.out.println();
+    }
+}
+public class HelloWorld{
+
+     public static void showMenu(){
+        System.out.println("1. Add Message");
+        System.out.println("2. View Messages List");
+        System.out.println("3. Remove Message");
+        System.out.println("4. Edit Message");
+        System.out.println("9. Exit");
+     }
+     
+     public static void firstChoice(ToDoList myList){
+        Scanner in = new Scanner(System.in);
+         System.out.print("Please enter desc: ");
+         String desc= in.nextLine();
+         System.out.print("Please enter status: ");
+         String status= in.nextLine();
+         System.out.print("Please enter date: ");
+         String date=in.nextLine();
+         myList.addMessage(new Message(desc,status,date));
+     }
+     
+     public static void secondChoice(ToDoList myList){
+         myList.showMessages();
+     }
+     
+     public static void thirdChoice(ToDoList myList){
+         Scanner in = new Scanner(System.in);
+         System.out.println("What message number you want to remove?")
+         myList.remove(in.nextInt()-1);
+     }
+     
+     public static void fourthChoice(ToDoList myList){
+         Scanner in = new Scanner(System.in);
+         System.out.println("What message number you want to change?")
+         Message m = myList.getMessage(in.nextInt()-1);
+         System.out.print("Please enter a new desc: ");
+         String desc= in.nextLine();
+         System.out.print("Please enter a new  status: ");
+         String status= in.nextLine();
+         System.out.print("Please enter a new  date: ");
+         String date=in.nextLine();
+         m.changeDesc(desc);
+         m.changeStatus(status);
+         m.changeExceDate(date);
+     }
+     public static void main(String []args){
+        Scanner in = new Scanner(System.in);
+        int choice;
+        ToDoList myList = new ToDoList();
+        showMenu();
+        choice = in.nextInt();
+        while(choice!=9){
+            switch(choice){
+                case 1: firstChoice(myList);break;
+                case 2: secondChoice(myList);break;
+                case 3: thirdChoice(myList);break;
+                default: fourthChoice(myList);
+            }
+        choice = in.nextInt();
+        }
+
+     }
+}
